@@ -1,28 +1,56 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 // Importando o logo
 import logoImg from '../assets/logo.png';
 
 const isMenuOpen = ref(false);
+const router = useRouter();
+const route = useRoute();
+
+// Função genérica para rolar até uma seção
+const scrollToSection = async (sectionId: string) => {
+  isMenuOpen.value = false; // Fecha o menu mobile se estiver aberto
+
+  if (route.path !== '/') {
+    await router.push('/');
+    // Pequeno delay para garantir que a página carregou antes de rolar
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  } else {
+    const element = document.getElementById(sectionId);
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 </script>
 
 <template>
   <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-gradient-to-b from-black/90 to-transparent backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <router-link to="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
         <img
             :src="logoImg"
             alt="B10 Logo"
             class="h-12 w-auto object-contain"
         />
-      </a>
+      </router-link>
 
       <nav class="hidden md:flex gap-8 uppercase text-sm font-bold tracking-widest text-white">
-        <a href="#" class="hover:text-b10-gold transition-colors">Eventos</a>
-        <a href="#" class="hover:text-b10-gold transition-colors">Galeria</a>
-        <a href="#" class="hover:text-b10-gold transition-colors">Mídia</a>
-        <a href="https://furia.gg" target="_blank" class="hover:text-b10-gold transition-colors">Loja</a>
+        <!-- Botão Início (só aparece se NÃO estiver na home) -->
+        <router-link v-if="route.path !== '/'" to="/" class="hover:text-b10-gold transition-colors">
+          Início
+        </router-link>
+
+        <a @click.prevent="scrollToSection('eventos')" class="hover:text-b10-gold transition-colors cursor-pointer">Eventos</a>
+        
+        <router-link to="/galeria" class="hover:text-b10-gold transition-colors">
+          Galeria
+        </router-link>
+
+        <router-link to="/noticias" class="hover:text-b10-gold transition-colors">Notícias</router-link>
       </nav>
 
       <button @click="isMenuOpen = !isMenuOpen" class="md:hidden text-white">
@@ -34,10 +62,16 @@ const isMenuOpen = ref(false);
 
     <div v-if="isMenuOpen" class="md:hidden bg-b10-dark text-white p-6 absolute w-full border-b border-gray-800 shadow-2xl">
       <nav class="flex flex-col gap-4 text-center font-bold uppercase">
-        <a href="#" class="block py-2 hover:text-b10-gold">Eventos</a>
-        <a href="#" class="block py-2 hover:text-b10-gold">Galeria</a>
-        <a href="#" class="block py-2 hover:text-b10-gold">Mídia</a>
-        <a href="https://furia.gg" target="_blank" class="block py-2 hover:text-b10-gold">Loja</a>
+        <!-- Botão Início Mobile -->
+        <router-link v-if="route.path !== '/'" to="/" class="block py-2 hover:text-b10-gold" @click="isMenuOpen = false">
+          Início
+        </router-link>
+
+        <a @click.prevent="scrollToSection('eventos')" class="block py-2 hover:text-b10-gold cursor-pointer">Eventos</a>
+        <router-link to="/galeria" class="block py-2 hover:text-b10-gold" @click="isMenuOpen = false">Galeria</router-link>
+        <a href="https://rp-b10s-newsletter.beehiiv.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAPTubNleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAafSjru-VNNz37JWOHsJ6W-peIpWrqcego8utR-uX0DX45gtrHRn7VR9iXYKaA_aem_O_c4oc0pfjcrjyNvQqZStw" target="_blank" class="block py-2 hover:text-b10-gold">
+          Notícias
+        </a>
       </nav>
     </div>
   </header>

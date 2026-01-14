@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <!--
   <section class="bg-b10-dark py-12 md:py-20 px-4 overflow-hidden">
 
     <div class="max-w-[1280px] mx-auto relative group">
@@ -20,4 +21,5 @@
 
     </div>
   </section>
+  -->
 </template>

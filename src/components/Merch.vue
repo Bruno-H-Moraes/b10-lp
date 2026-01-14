@@ -28,11 +28,11 @@ const products = [
 </script>
 
 <template>
-  <section class="py-24 px-6 bg-b10-dark text-white border-t border-gray-900">
+  <section id="merch" class="py-16 md:py-24 px-4 md:px-6 bg-b10-dark text-white border-t border-gray-900">
     <div class="max-w-7xl mx-auto">
 
-      <div class="flex items-end justify-between mb-12">
-        <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter">
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12 gap-4">
+        <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter">
           Merch <span class="text-b10-gold">Oficial</span>
         </h2>
         <a href="https://furia.gg" target="_blank" class="hidden md:flex items-center gap-2 font-bold text-sm uppercase text-gray-400 hover:text-white transition">
@@ -43,7 +43,7 @@ const products = [
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         <div
             v-for="product in products"
             :key="product.id"
@@ -53,18 +53,19 @@ const products = [
             {{ product.tag }}
           </div>
 
-          <div class="p-8 pb-0 relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-[#151515]">
+          <div class="p-6 md:p-8 pb-0 relative overflow-hidden bg-gradient-to-b from-[#1a1a1a] to-[#151515]">
             <img
                 :src="product.image"
                 :alt="product.name"
                 class="w-full h-auto object-contain transform group-hover:scale-110 group-hover:-translate-y-2 transition duration-500 ease-out"
             />
 
-            <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition duration-300 ease-out">
+            <!-- Botão ajustado para mobile: sempre visível em telas pequenas ou com translate ajustado -->
+            <div class="absolute inset-x-0 bottom-0 p-4 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition duration-300 ease-out">
               <a
                   :href="product.link"
                   target="_blank"
-                  class="block w-full text-center bg-white text-black font-black uppercase py-3 hover:bg-b10-gold transition-colors cursor-pointer"
+                  class="block w-full text-center bg-white text-black font-black uppercase py-3 hover:bg-b10-gold transition-colors cursor-pointer shadow-lg"
               >
                 Comprar Agora
               </a>
@@ -72,7 +73,7 @@ const products = [
           </div>
 
           <div class="p-6">
-            <h3 class="text-xl font-bold uppercase mb-2 group-hover:text-b10-gold transition-colors">
+            <h3 class="text-lg md:text-xl font-bold uppercase mb-2 group-hover:text-b10-gold transition-colors">
               {{ product.name }}
             </h3>
           </div>
@@ -80,8 +81,8 @@ const products = [
         </div>
       </div>
 
-      <div class="mt-12 text-center md:hidden">
-        <a href="https://furia.gg" target="_blank" class="inline-block border border-gray-600 text-white font-bold uppercase px-8 py-3 rounded hover:bg-white hover:text-black transition">
+      <div class="mt-10 text-center md:hidden">
+        <a href="https://furia.gg" target="_blank" class="inline-block w-full border border-gray-600 text-white font-bold uppercase px-8 py-4 rounded hover:bg-white hover:text-black transition">
           Ver Loja Completa
         </a>
       </div>
